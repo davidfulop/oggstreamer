@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/src.csproj"
+                "${workspaceFolder}/src/Oggstreamer/Oggstreamer.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
