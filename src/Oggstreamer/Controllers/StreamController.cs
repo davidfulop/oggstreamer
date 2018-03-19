@@ -12,9 +12,9 @@ namespace Oggstreamer.Controllers
         public FileStreamResult GetStream()
         {
             var stream = new MemoryStream(Encoding.ASCII.GetBytes("Hello World"));
-            return new FileStreamResult(stream, new MediaTypeHeaderValue("text/plain"))
+            return new FileStreamResult(stream, new MediaTypeHeaderValue("audio/ogg"))
             {
-                FileDownloadName = "test.txt"
+                FileDownloadName = "test.ogg"
             };
         }
     }
