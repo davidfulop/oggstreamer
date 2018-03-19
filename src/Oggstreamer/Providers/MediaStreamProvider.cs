@@ -11,7 +11,8 @@ namespace Oggstreamer.Providers
     {
         public Stream GetMediaStream()
         {
-            return new FileStream("assets/test01.ogg", FileMode.Open);
+            var filePath = Path.Combine("assets", "test01.ogg");
+            return new FileStream(filePath, FileMode.Open);
         }
     }
 }
