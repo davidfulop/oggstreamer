@@ -1,6 +1,10 @@
 using System.Net;
 using NUnit.Framework;
 using Oggstreamer.Controllers;
+using NSubstitute;
+using Oggstreamer.Providers;
+using System.IO;
+using System.Text;
 
 namespace Oggstreamer.UnitTests
 {
@@ -11,7 +15,9 @@ namespace Oggstreamer.UnitTests
         [SetUp]
         public void SetUp()
         {
-            _streamController = new StreamController();
+            var mediaStreamProvider = Substitute.For<IMediaStreamProvider>();
+            mediaStreamProvider.GetMediaStream().Returns(new MemoryStream(Encoding.ASCII.GetBytes("This is a test content.")));
+            _streamController = new StreamController(mediaStreamProvider);
         }
 
         [Test]
@@ -35,7 +41,5 @@ namespace Oggstreamer.UnitTests
             var result = _streamController.GetStream();
             Assert.AreEqual("audio/ogg", result.ContentType, "Unexpected content type.");
         }
-
-
     }
 }
