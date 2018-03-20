@@ -5,6 +5,7 @@ using NSubstitute;
 using Oggstreamer.Providers;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Oggstreamer.UnitTests
 {
@@ -21,24 +22,24 @@ namespace Oggstreamer.UnitTests
         }
 
         [Test]
-        public void GetStream_returns_a_stream_with_nonzero_length()
+        public async Task GetStream_returns_a_stream_with_nonzero_length()
         {
-            var result = _streamController.GetStream();
+            var result = await _streamController.GetStream();
             Assert.IsTrue(result.FileStream.Length > 0);
         }
 
         [Test]
-        public void GetStream_returns_a_result_with_a_valid_ogg_filename()
+        public async Task GetStream_returns_a_result_with_a_valid_ogg_filename()
         {
-            var result = _streamController.GetStream();
+            var result = await _streamController.GetStream();
             Assert.IsFalse(string.IsNullOrEmpty(result.FileDownloadName), "Filename is null or empty string.");
             Assert.IsTrue(result.FileDownloadName.EndsWith(".ogg"), "Filename ends with something unexpected!");
         }
         
         [Test]
-        public void GetStream_returns_a_result_with_the_the_right_ContentType()
+        public async Task GetStream_returns_a_result_with_the_the_right_ContentType()
         {
-            var result = _streamController.GetStream();
+            var result = await _streamController.GetStream();
             Assert.AreEqual("audio/ogg", result.ContentType, "Unexpected content type.");
         }
     }

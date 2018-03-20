@@ -3,6 +3,7 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using Oggstreamer.Providers;
+using System.Threading.Tasks;
 
 namespace Oggstreamer.Controllers
 {
@@ -17,9 +18,9 @@ namespace Oggstreamer.Controllers
         }
 
         [HttpGet]
-        public FileStreamResult GetStream()
+        public async Task<FileStreamResult> GetStream()
         {
-            var stream = _mediaStreamProvider.GetMediaStream();
+            var stream = await _mediaStreamProvider.GetMediaStream();
             return new FileStreamResult(stream, new MediaTypeHeaderValue("audio/ogg"))
             {
                 FileDownloadName = "testfile.ogg"

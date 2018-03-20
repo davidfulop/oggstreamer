@@ -22,9 +22,9 @@ namespace Oggstreamer.IntegrationTests
         }
 
         [Test]
-        public void GetMediaStream_returns_a_stream()
+        public async Task GetMediaStream_returns_a_stream()
         {
-            var result = _mediaStreamProvider.GetMediaStream();
+            var result = await _mediaStreamProvider.GetMediaStream();
             Assert.IsNotNull(result, "MediaStreamProvider.GetMediaStream returned a null stream.");
             Assert.IsTrue(result.Length > 0, "The stream returned by MediaStreamProvider.GetMediaStream has 0 length.");
         }
