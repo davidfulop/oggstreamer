@@ -289,3 +289,4 @@ __pycache__/
 
 # asset formats
 *.ogg
+*.flac
