@@ -1,10 +1,6 @@
-using System.Net;
 using NUnit.Framework;
-using Oggstreamer.Controllers;
 using NSubstitute;
 using Oggstreamer.Providers;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Oggstreamer.IntegrationTests
