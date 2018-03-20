@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 
 namespace Oggstreamer.Providers
@@ -9,10 +10,19 @@ namespace Oggstreamer.Providers
 
     public class MediaStreamProvider : IMediaStreamProvider
     {
+        private readonly ITranscodingProvider _transcodingProvider;
+
+        public MediaStreamProvider(ITranscodingProvider transcodingProvider)
+        {
+            _transcodingProvider = transcodingProvider ?? throw new ArgumentNullException(nameof(transcodingProvider));
+        }
+
         public Stream GetMediaStream()
         {
-            var filePath = Path.Combine("assets", "test01.ogg");
-            return new FileStream(filePath, FileMode.Open);
+            var originalFilePath = Path.Combine("assets", "test01.flac");
+            var targetFilePath = Path.Combine("assets", "test01.ogg");
+            _transcodingProvider.Transcode(originalFilePath, targetFilePath).Wait();
+            return new FileStream(targetFilePath, FileMode.Open);
         }
     }
 }
