@@ -17,13 +17,15 @@ namespace Oggstreamer.Controllers
             _mediaStreamProvider = mediaStreamProvider ?? throw new System.ArgumentNullException(nameof(mediaStreamProvider));
         }
 
-        [HttpGet]
-        public async Task<FileStreamResult> GetStream()
+        [HttpGet("{audioQuality}")]
+        public async Task<ActionResult> GetStream(int audioQuality)
         {
-            var stream = await _mediaStreamProvider.GetMediaStream();
+            if (audioQuality < 0 || audioQuality > 5)
+                return StatusCode(400);
+            var stream = await _mediaStreamProvider.GetMediaStream(audioQuality);
             return new FileStreamResult(stream, new MediaTypeHeaderValue("audio/ogg"))
             {
-                FileDownloadName = "testfile.ogg"
+                FileDownloadName = $"testfile_q{audioQuality}.ogg"
             };
         }
     }

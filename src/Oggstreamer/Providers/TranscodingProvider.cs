@@ -6,14 +6,16 @@ namespace Oggstreamer.Providers
 {
     public interface ITranscodingProvider
     {
-        Task<string> Transcode(string originalFilePath, string targetFilePath);
+        Task<string> Transcode(string originalFilePath, string targetFilePath, int audioQuality);
     }
 
     public class TranscodingProvider : ITranscodingProvider
     {
-        public async Task<string> Transcode(string originalFilePath, string targetFilePath)
+        public async Task<string> Transcode(string originalFilePath, string targetFilePath, int audioQuality)
         {
-            var command = $"ffmpeg -y -i {originalFilePath} -c:a libvorbis -f oga {targetFilePath}";            
+            if (audioQuality < 0 || audioQuality > 5) throw new ArgumentException($"{audioQuality} must be between 0 and 5.");
+
+            var command = $"ffmpeg -y -i {originalFilePath} -c:a libvorbis -q:a {audioQuality} -f oga {targetFilePath}";            
             var process = new Process() { StartInfo = new ProcessStartInfo {
                     FileName = "/bin/bash",
                     Arguments = $"-c \"{command}\"",

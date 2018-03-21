@@ -6,7 +6,7 @@ namespace Oggstreamer.Providers
 {
     public interface IMediaStreamProvider
     {
-        Task<Stream> GetMediaStream();
+        Task<Stream> GetMediaStream(int audioQuality);
     }
 
     public class MediaStreamProvider : IMediaStreamProvider
@@ -18,11 +18,11 @@ namespace Oggstreamer.Providers
             _transcodingProvider = transcodingProvider ?? throw new ArgumentNullException(nameof(transcodingProvider));
         }
 
-        public async Task<Stream> GetMediaStream()
+        public async Task<Stream> GetMediaStream(int audioQuality)
         {
             var originalFilePath = Path.Combine("assets", "test01.flac");
             var targetFilePath = Path.Combine("assets", "test01.ogg");
-            await _transcodingProvider.Transcode(originalFilePath, targetFilePath);
+            await _transcodingProvider.Transcode(originalFilePath, targetFilePath, audioQuality);
             return new FileStream(targetFilePath, FileMode.Open);
         }
     }
