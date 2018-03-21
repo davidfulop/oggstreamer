@@ -33,6 +33,8 @@ run_integration_tests: build_integration_tests
 	@docker run -e ASPNETCORE_ENVIRONMENT=$(ASPNETCORE_ENVIRONMENT) -t oggstreamer-integrationtests:$(VERSION)
 .PHONY: run_integration_tests
 
+test: run_unit_tests run_integration_tests
+.PHONY: test
 
 cleanup:
 	@docker kill oggstreamer
